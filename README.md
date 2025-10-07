@@ -18,7 +18,7 @@
 
 `Search-2api` 的诞生，源于一个纯粹而强大的哲学：**让 AI 睁开双眼，拥抱此刻的互联网。**
 
-我们相信，真正的智能，是融合了历史智慧与实时信息的能力。本项目不是要创造另一个搜索引擎，而是要成为一座桥梁，一个“灵魂摆渡人”，将 <sup>1</sup> [<sup>1</sup>](https://search.sh/) 强大的实时搜索与总结能力，优雅地摆渡到任何遵循 OpenAI API 标准的浩瀚生态之中。
+我们相信，真正的智能，是融合了历史智慧与实时信息的能力。本项目不是要创造另一个搜索引擎，而是要成为一座桥梁，一个“灵魂摆渡人”，将 [<sup>1</sup>](https://search.sh/) 强大的实时搜索与总结能力，优雅地摆渡到任何遵循 OpenAI API 标准的浩瀚生态之中。
 
 这不仅仅是一个开源项目，这是我们对“信息自由”与“技术普惠”的一次致敬。我们相信，通过动手实践（Learning by Doing），每个人都能成为驾驭信息洪流的船长。这份文档，就是你的第一张海图。它将毫无保留地为你揭示所有秘密，我们希望它能点燃你的好奇心，让你在探索中收获愉悦，并最终发出感叹：**“原来如此，我来我也行！”**
 
@@ -48,14 +48,14 @@
 
 ```mermaid
 graph TD
-    A[👨‍💻 你的应用<br>(如 Cherry Studio)] -- "点一份'西红柿炒鸡蛋怎么做？'"<br>POST /v1/chat/completions --> B{🚪 Nginx 前台<br>(端口: 8080)};
-    B -- "将菜单递给8000号房间" --> C[🏢 FastAPI 办公室<br>(端口: 8000)];
-    C -- "收到菜单，交给专家处理" --> D[🕵️‍♂️ SearchProvider 专家];
-    D -- "查阅菜谱(访问 search.sh)" --> E[🌐 search.sh API];
-    E -- "实时反馈: '正在找锅...'"<br>"'正在打鸡蛋...'"<br>"'西...红...柿...'" --> D;
-    D -- "将专家的反馈实时翻译成顾客能懂的话" --> C;
-    C -- "服务员实时传话" --> B;
-    B -- "前台实时广播给顾客" --> A;
+    A["👨‍💻 你的应用<br/>(如 Cherry Studio)"] -- "发起聊天请求<br/>(POST /v1/chat/completions)" --> B{"🚪 Nginx 前台<br/>(端口: 8080)"}
+    B -- "请求转发" --> C["🏢 FastAPI 办公室<br/>(端口: 8000)"]
+    C -- "委托任务" --> D["🕵️‍♂️ SearchProvider 专家"]
+    D -- "访问 search.sh API" --> E["🌐 search.sh API"]
+    E -- "返回实时数据流<br/>(状态+内容)" --> D
+    D -- "翻译并生成<br/>OpenAI 格式流" --> C
+    C -- "实时返回数据" --> B
+    B -- "将数据流传给应用" --> A
 ```
 
 **数据流转详解：**
@@ -87,7 +87,7 @@ cd Search-2api
 
 这是最关键的一步，我们需要从浏览器那里“借”来一张临时通行证。
 
-1.  **打开开发者工具**: 在你的 Chrome/Edge 浏览器中，访问 <sup>1</sup> [<sup>1</sup>](https://search.sh/)，然后按 `F12` 打开开发者工具。
+1.  **打开开发者工具**: 在你的 Chrome/Edge 浏览器中，访问 [<sup>1</sup>](https://search.sh/)，然后按 `F12` 打开开发者工具。
 2.  **找到网络请求**: 点击 "Network" (网络) 标签页。在 `search.sh` 的搜索框里随便输入点什么（比如 "hello"）并回车。
 3.  **定位关键请求**: 在网络请求列表中，找到一个名为 `search` 的请求。点击它。
 4.  **复制 Cookie 值**: 在右侧弹出的窗口中，向下滚动到 **"Request Headers"** (请求标头) 部分。找到 `cookie:` 字段，右键点击它的完整值，选择 "Copy value"。
@@ -105,7 +105,7 @@ cd Search-2api
 
 #### **第四步：点火！- 启动服务**
 
-确保你已经安装了 Docker Desktop <sup>2</sup> [<sup>3</sup>](https://www.docker.com/products/docker-desktop/)。然后在项目根目录的命令行中，运行：
+确保你已经安装了 Docker Desktop [<sup>3</sup>](https://www.docker.com/products/docker-desktop/)。然后在项目根目录的命令行中，运行：
 
 ```bash
 docker-compose up -d --build
@@ -130,7 +130,7 @@ curl http://localhost:8080/v1/chat/completions -H "Content-Type: application/jso
 不想在本地折腾？没问题！你可以将此项目免费部署到 Hugging Face Spaces。
 
 1.  **Fork 本仓库**: 在 GitHub 页面右上角，点击 "Fork"，将此项目复制到你自己的 GitHub 账户下。
-2.  **创建 Space**: 前往 Hugging Face <sup>3</sup> [<sup>4</sup>](https://huggingface.co/new-space)，选择 "Docker" -> "Docker from Hub"。
+2.  **创建 Space**: 前往 Hugging Face [<sup>4</sup>](https://huggingface.co/new-space)，选择 "Docker" -> "Docker from Hub"。
 3.  **配置 Space**:
     *   **Space name**: 给你项目起个酷炫的名字。
     *   **Docker template**: 选择 `Nginx server from a Dockerfile`。
@@ -175,7 +175,7 @@ curl http://localhost:8080/v1/chat/completions -H "Content-Type: application/jso
 
 `Search-2api` 已经完成了从 0 到 1 的关键一步，但它的潜力远不止于此。
 
-#### **✅ 现阶段已完成 (v9.0)**
+#### **✅ 现阶段已完成 (v9.1)**
 
 *   [x] **核心代理功能**: 实现了 `search.sh` 到 OpenAI API 的完整转换。
 *   [x] **流式与非流式支持**: 兼容两种请求模式。
@@ -202,7 +202,7 @@ curl http://localhost:8080/v1/chat/completions -H "Content-Type: application/jso
 
 4.  **【待实现】支持图片搜索结果 (★★★★★)**
     *   **问题**: `search.sh` 可能会返回图片搜索结果，我们目前忽略了它们。
-    *   **技术路径**: 解析 API 响应中可能包含的图片链接，并将其以 Markdown 格式 (`!alt <sup>1</sup> [<sup>5</sup>](url)`) 插入到最终的回答中，实现真正的图文并茂。
+    *   **技术路径**: 解析 API 响应中可能包含的图片链接，并将其以 Markdown 格式 (`!alt Image [<sup>5</sup>](url)`) 插入到最终的回答中，实现真正的图文并茂。
 
 #### **🤝 邀请你成为“共建者”**
 
@@ -256,7 +256,7 @@ Search-2api/
 *   **署名** — 您必须给出适当的署名，提供指向本许可协议的链接，同时标明是否（对原始作品）作了修改。您可以用任何合理的方式来署名，但不得以任何方式暗示许可人为您或您的使用背书。
 *   **没有附加限制** — 您不得适用法律术语或者技术措施从而限制其他人做许可协议允许的事情。
 
-完整的协议文本请参考 Apache License 2.0 <sup>1</sup> [<sup>6</sup>](https://www.apache.org/licenses/LICENSE-2.0)。
+完整的协议文本请参考 Apache License 2.0 [<sup>6</sup>](https://www.apache.org/licenses/LICENSE-2.0)。
 
 ---
 

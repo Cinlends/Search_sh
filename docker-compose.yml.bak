@@ -32,3 +32,4 @@ services:
 networks:
   search-net:
     driver: bridge
+
